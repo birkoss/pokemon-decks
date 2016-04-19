@@ -17,12 +17,33 @@
   </head>
   <body ng-app="deckManager">
 
-    <ion-pane>
-      <ion-header-bar class="bar-stable">
-        <h1 class="title">Deck Name...</h1>
-      </ion-header-bar>
-      <ion-content>
-      </ion-content>
+    <ion-side-menus>
+
+      <ion-side-menu-content ng-controller="deckController">
+        <ion-header-bar class="bar-stable">
+          <button class="button button-icon" ng-click="toggleMenu()"><i class="icon ion-navicon"></i></button>
+          <h1 class="title">Deck Name...</h1>
+          <button class="button button-icon" ng-click="addCard()"><i class="icon ion-plus"></i></button>
+        </ion-header-bar>
+        <ion-content>
+          <ion-list>
+            <ion-item ng-repeat="deck in decks" ng-click="selectDeck(deck)">
+              {{ deck.name }}
+            </ion-item>
+          </ion-list>
+        </ion-content>
+      </ion-side-menu-content>
+
+      <ion-side-menu side="left" ng-controller="deckListController">
+        <ion-header-bar class="bar-stable">
+          <h1 class="title">Decks list</h1>
+          <button class="button button-icon" ng-click="createDeck()"><i class="icon ion-plus"></i></button>
+        </ion-header-bar>
+        <ion-content>
+
+        </ion-content>
+      </ion-side-menu>
+
     </ion-pane>
   </body>
 </html>
