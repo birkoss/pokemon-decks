@@ -33,13 +33,16 @@
                 <p>{{ card.type }}</p>
               </div>
               <div class="buttons">
-                <button class="button button-clear button-positive" ng-click="changeQuantity($index, 1)" ng-disabled="card.qty >= 4"><i class="icon ion-chevron-up"></i></button>
+                <button class="button button-clear button-positive" ng-click="changeQuantity($index, 1)" ng-disabled="card.qty >= 4 && card.type != 'energy' "><i class="icon ion-chevron-up"></i></button>
                 <button class="button button-clear button-positive" ng-click="changeQuantity($index, -1)"><i class="icon ion-chevron-down"></i></button>
                 <button class="button button-clear button-assertive" ng-click="deleteCard($index)"><i class="icon ion-minus-circled"></i></button>
               </div>
             </div>
           </ion-list>
         </ion-content>
+        <ion-footer-bar align-title="left" class="bar-positive">
+          <h1 class="title">Cards: {{ deck.cards.length }}</h1>
+        </ion-footer-bar>
       </ion-side-menu-content>
 
       <ion-side-menu side="left" ng-controller="deckListController">

@@ -134,7 +134,10 @@ deckManager.controller('deckController', function($scope, $ionicSideMenuDelegate
   });
 
   $scope.changeQuantity = function(index, mod) {
-    $scope.deck.cards[index].qty = Math.min($scope.deck.cards[index].qty + mod, 4);
+    $scope.deck.cards[index].qty += mod;
+    if( $scope.deck.cards[index].qty$scope.deck.cards[index].type != 'energy' && $scope.deck.cards[index].qty > 4 ) {
+      $scope.deck.cards[index].qty = 4;
+    }
     $scope.decksList.save();
 
     if( $scope.deck.cards[index].qty <= 0 ) {
