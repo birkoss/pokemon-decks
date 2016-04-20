@@ -25,6 +25,10 @@ deckManager.factory('Decks', function() {
     window.localStorage['currentDeck'] = decks.currentDeck;
   };
 
+  decks.removeAt = function(index) {
+    decks.decks.splice(index, 1);
+  };
+
   decks.getDeck = function(index) {
     if( index < decks.decks.length ) {
       return decks.decks[ index ];
@@ -103,7 +107,8 @@ deckManager.controller('deckListController', function($scope, $ionicSideMenuDele
   };
 
   $scope.deleteDeck = function(index) {
-
+    $scope.decksList.removeAt(index);
+    $scope.decksList.save();
   };
 
   $scope.selectDeck = function(index) {
