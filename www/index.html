@@ -22,15 +22,11 @@
       <ion-side-menu-content ng-controller="deckController">
         <ion-header-bar class="bar-stable">
           <button class="button button-icon" ng-click="toggleMenu()"><i class="icon ion-navicon"></i></button>
-          <h1 class="title">Deck Name...</h1>
+          <h1 class="title">{{ deck.name }}</h1>
           <button class="button button-icon" ng-click="addCard()"><i class="icon ion-plus"></i></button>
         </ion-header-bar>
         <ion-content>
-          <ion-list>
-            <ion-item ng-repeat="deck in decks" ng-click="selectDeck(deck)">
-              {{ deck.name }}
-            </ion-item>
-          </ion-list>
+
         </ion-content>
       </ion-side-menu-content>
 
@@ -40,7 +36,11 @@
           <button class="button button-icon" ng-click="createDeck()"><i class="icon ion-plus"></i></button>
         </ion-header-bar>
         <ion-content>
-
+          <ion-list>
+            <ion-item ng-repeat="deck in decksList.decks" ng-click="selectDeck($index)" ng-class="{active: decksList.currentDeck == $index}">
+              {{ deck.name }}
+            </ion-item>
+          </ion-list>
         </ion-content>
       </ion-side-menu>
 
