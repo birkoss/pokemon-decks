@@ -109,6 +109,7 @@ deckManager.controller('deckListController', function($scope, $ionicSideMenuDele
   $scope.deleteDeck = function(index) {
     $scope.decksList.removeAt(index);
     $scope.decksList.save();
+    $scope.selectDeck($scope.decksList.decks.length-1)
   };
 
   $scope.selectDeck = function(index) {
