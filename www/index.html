@@ -51,10 +51,10 @@
         <ion-modal-view>
           <ion-header-bar>
             <h1 class="title">Deck Editor</h1>
-            <button class="button button-clear button-positive">Cancel</button>
+            <button class="button button-clear button-positive" ng-click="closeModal()">Cancel</button>
           </ion-header-bar>
           <ion-content>
-            <form ng-submit="deckSave(deck)">
+            <form ng-submit="submitModal(deck)">
               <div class="list">
                 <label class="item item-input">
                   <input type="text" placeholder="What is the name of your deck ?" ng-model="deck.name" />

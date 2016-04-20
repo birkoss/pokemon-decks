@@ -25,11 +25,15 @@ deckManager.factory('Decks', function() {
     window.localStorage['currentDeck'] = decks.currentDeck;
   };
 
-  decks.getCurrentDeck = function() {
-    if( decks.currentDeck < decks.decks.length ) {
-      return decks.decks[ decks.currentDeck ];
+  decks.getDeck = function(index) {
+    if( index < decks.decks.length ) {
+      return decks.decks[ index ];
     }
     return null;
+  };
+
+  decks.getCurrentDeck = function() {
+    return decks.getDeck(decks.currentDeck);
   };
 
   var savedDecks = window.localStorage['decks'];
@@ -48,7 +52,7 @@ deckManager.factory('Decks', function() {
 
 /* CONTROLLERS */
 
-deckManager.controller('deckListController', function($scope, $ionicSideMenuDelegate, $ionicModal, Decks) {
+deckManager.controller('deckListController', function($scope, $ionicSideMenuDelegate, $ionicListDelegate, $ionicModal, Decks) {
 
   // Load and create the modal
   $ionicModal.fromTemplateUrl('deck-editor.html', {
@@ -60,9 +64,46 @@ deckManager.controller('deckListController', function($scope, $ionicSideMenuDele
 
   $scope.decksList = Decks;
 
+  $scope.listMenu = $ionicListDelegate;
+
   $scope.createDeck = function() {
+    $scope.deck = {name: ''};
+    $scope.editingDeckIndex = -1;
     $scope.modal.show();
-    //$ionicSideMenuDelegate.toggleLeft();
+  };
+
+  $scope.closeModal = function () {
+    $scope.listMenu.closeOptionButtons();
+    $scope.modal.hide();
+  };
+
+  $scope.submitModal = function(deck) {
+    if( !deck ) {
+      return;
+    }
+
+    if( $scope.editingDeckIndex == -1 ) {
+      deck.cards = [];
+      $scope.decksList.add( deck );
+    } else {
+      $scope.decksList.getDeck( $scope.editingDeckIndex ).name = deck.name;
+    }
+
+    $scope.listMenu.closeOptionButtons();
+
+    $scope.decksList.save();
+    $scope.modal.hide();
+  };
+
+  $scope.renameDeck = function(index) {
+    $scope.editingDeckIndex = index;
+    $scope.deck = {name: $scope.decksList.getDeck(index).name};
+
+    $scope.modal.show();
+  };
+
+  $scope.deleteDeck = function(index) {
+
   };
 
   $scope.selectDeck = function(index) {
@@ -72,7 +113,7 @@ deckManager.controller('deckListController', function($scope, $ionicSideMenuDele
   };
 });
 //
-deckManager.controller('deckController', function($scope, $ionicSideMenuDelegate, Decks) {
+deckManager.controller('deckController', function($scope, $ionicSideMenuDelegate, $ionicListDelegate, Decks) {
 
   $scope.decksList = Decks;
   $scope.deck = $scope.decksList.getCurrentDeck();
@@ -89,6 +130,15 @@ deckManager.controller('deckController', function($scope, $ionicSideMenuDelegate
   $scope.$watch('decksList.currentDeck', function(newValue, oldValue, scope) {
     if( newValue != oldValue ) {
       $scope.deck = $scope.decksList.getCurrentDeck();
+    }
+  });
+
+  // Watch for the side menu to be closed
+  $scope.$watch(function() {
+    return $ionicSideMenuDelegate.isOpenLeft();
+  }, function(isOpen) {
+    if( !isOpen ) {
+      $ionicListDelegate.closeOptionButtons();
     }
   });
 });
