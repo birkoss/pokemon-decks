@@ -48,13 +48,21 @@ deckManager.factory('Decks', function() {
 
 /* CONTROLLERS */
 
-deckManager.controller('deckListController', function($scope, $ionicSideMenuDelegate, Decks) {
-  // $scope.decks = Decks.list();
+deckManager.controller('deckListController', function($scope, $ionicSideMenuDelegate, $ionicModal, Decks) {
+
+  // Load and create the modal
+  $ionicModal.fromTemplateUrl('deck-editor.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
 
   $scope.decksList = Decks;
 
   $scope.createDeck = function() {
-    $ionicSideMenuDelegate.toggleLeft();
+    $scope.modal.show();
+    //$ionicSideMenuDelegate.toggleLeft();
   };
 
   $scope.selectDeck = function(index) {

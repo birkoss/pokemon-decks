@@ -46,6 +46,29 @@
         </ion-content>
       </ion-side-menu>
 
-    </ion-pane>
+      <!-- Modal deck editor //-->
+      <script id="deck-editor.html" type="text/ng-template">
+        <ion-modal-view>
+          <ion-header-bar>
+            <h1 class="title">Deck Editor</h1>
+            <button class="button button-clear button-positive">Cancel</button>
+          </ion-header-bar>
+          <ion-content>
+            <form ng-submit="deckSave(deck)">
+              <div class="list">
+                <label class="item item-input">
+                  <input type="text" placeholder="What is the name of your deck ?" ng-model="deck.name" />
+                </label>
+              </div>
+              <div class="padding">
+                <button type="submit" class="button button-block button-positive">Save</button>
+              </div>
+            </form>
+          </ion-content>
+        </ion-modal-view>
+      </script>
+
+    </ion-side-menus>
+
   </body>
 </html>
