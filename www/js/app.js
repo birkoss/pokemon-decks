@@ -133,6 +133,20 @@ deckManager.controller('deckController', function($scope, $ionicSideMenuDelegate
     $scope.modal = modal;
   });
 
+  $scope.changeQuantity = function(index, mod) {
+    $scope.deck.cards[index].qty = Math.min($scope.deck.cards[index].qty + mod, 4);
+    $scope.decksList.save();
+
+    if( $scope.deck.cards[index].qty <= 0 ) {
+      $scope.deleteCard(index);
+    }
+  };
+
+  $scope.deleteCard = function(index) {
+    $scope.deck.cards.splice(index, 1);
+    $scope.decksList.save();
+  };
+
   $scope.closeModal = function () {
     $scope.modal.hide();
   };
@@ -156,7 +170,7 @@ deckManager.controller('deckController', function($scope, $ionicSideMenuDelegate
   };
 
   $scope.addCard = function() {
-    $scope.modal.card = {'card': ''};
+    $scope.card = {name: ''};
     $scope.modal.show();
   };
 
