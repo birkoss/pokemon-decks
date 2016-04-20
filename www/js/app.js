@@ -159,7 +159,8 @@ deckManager.controller('deckController', function($scope, $ionicSideMenuDelegate
     if( $scope.decksList.getCurrentDeck().cards == undefined ) {
       $scope.decksList.getCurrentDeck().cards = [];
     }
-    $scope.decksList.getCurrentDeck().cards.push( {name: card.name, qty:1} );
+    $scope.decksList.getCurrentDeck().cards.push( {name:card.name, type:card.type, qty:1} );
+
 
     $scope.decksList.save();
     $scope.modal.hide();
@@ -170,7 +171,7 @@ deckManager.controller('deckController', function($scope, $ionicSideMenuDelegate
   };
 
   $scope.addCard = function() {
-    $scope.card = {name: ''};
+    $scope.card = {name: '', type:'pokemon'};
     $scope.modal.show();
   };
 
