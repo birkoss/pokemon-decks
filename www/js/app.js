@@ -119,17 +119,45 @@ deckManager.controller('deckListController', function($scope, $ionicSideMenuDele
   };
 });
 //
-deckManager.controller('deckController', function($scope, $ionicSideMenuDelegate, $ionicListDelegate, Decks) {
+deckManager.controller('deckController', function($scope, $ionicSideMenuDelegate, $ionicListDelegate, $ionicModal, Decks) {
 
   $scope.decksList = Decks;
   $scope.deck = $scope.decksList.getCurrentDeck();
+
+
+  // Load and create the modal
+  $ionicModal.fromTemplateUrl('card-editor.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+
+  $scope.closeModal = function () {
+    $scope.modal.hide();
+  };
+
+  $scope.submitModal = function(card) {
+    if( !card ) {
+      return;
+    }
+
+    if( $scope.decksList.getCurrentDeck().cards == undefined ) {
+      $scope.decksList.getCurrentDeck().cards = [];
+    }
+    $scope.decksList.getCurrentDeck().cards.push( {name: card.name, qty:1} );
+
+    $scope.decksList.save();
+    $scope.modal.hide();
+  };
 
   $scope.toggleMenu = function() {
     $ionicSideMenuDelegate.toggleLeft();
   };
 
   $scope.addCard = function() {
-
+    $scope.modal.card = {'card': ''};
+    $scope.modal.show();
   };
 
   // Watch for a deck change
