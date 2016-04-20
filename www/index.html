@@ -39,6 +39,8 @@
           <ion-list>
             <ion-item ng-repeat="deck in decksList.decks" ng-click="selectDeck($index)" ng-class="{active: decksList.currentDeck == $index}">
               {{ deck.name }}
+              <ion-option-button class="button-positive" ng-click="renameDeck($index)">Rename</ion-option-button>
+              <ion-option-button class="button-assertive" ng-click="deleteDeck($index)">Delete</ion-option-button>
             </ion-item>
           </ion-list>
         </ion-content>
